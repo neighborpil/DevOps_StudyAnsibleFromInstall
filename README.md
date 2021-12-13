@@ -33,4 +33,39 @@ Example codes
 # systemctl restart network
 # ping 192.168.100.1
 ```
-4. 
+3. DNS 서버 설정
+```
+# vi /etc/resolv.conf
+
+-- DNS 서버 입력
+nameserver 8.8.8.8
+```
+```
+# yum repolist
+```
+5. 추가 패키지를 위한 공간 설정
+```
+# yum -y install epel-release
+```
+6. ansible 설치
+```
+# yum -y install ansible
+```
+
+### 실행
+```
+# ansible all -m ping -k
+-- 에러뜸
+
+# vi /etc/ansible/hosts
+-- 제일 아래 부분에 호스트 설정 192.168.100.181
+
+-- public key 교환을 위한 yes/no가 뜨면 yes 해주면 됨
+# ansible all -m ping
+
+-- 3번 반복 후
+-- 키교환 생랴하는 옵션 추가해서 핑 해봄
+# ansible all -m ping -k
+
+
+```
