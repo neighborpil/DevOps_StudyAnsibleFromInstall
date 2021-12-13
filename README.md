@@ -52,7 +52,7 @@ nameserver 8.8.8.8
 # yum -y install ansible
 ```
 
-### 실행
+### 설치 체크
 ```
 # ansible all -m ping -k
 -- 에러뜸
@@ -66,6 +66,37 @@ nameserver 8.8.8.8
 -- 3번 반복 후
 -- 키교환 생랴하는 옵션 추가해서 핑 해봄
 # ansible all -m ping -k
+
+```
+### 앤서블 파일 확인
+
+ - 환경설정 파일 : /etc/ansible/ansible.cfg
+ - 호스트 파일 : /etc/ansible/hosts
+
+### 앤서블 옵션값
+ - -i(--inventory-file): 적용될 호스트들에 대한 파일
+ - -m(--module-name): 모듈을 선택할 수 있도록
+ - -k(--ask-pass): 패스워드를 물어보도록 설정
+ - -K(--asnk-become-pass): 관리자로 권한 상승
+ - --list-hosts: 적용되는 호스트들을 확인
+
+```
+# ansible all -m ping -k
+
+# vi test
+--
+192.168.100.181
+192.168.100.182
+--
+
+# ansible all -i test -m ping -k
+
+# ansible nginx -m ping -k
+
+# ansible nginx -m ping -k -K # 관리자 권한 획득
+
+# ansible nginx -m ping --list-hosts # 적용되게될 호스트의 리스트를 보여줌
+# ansible all -i test -m ping --list-hosts
 
 
 ```
