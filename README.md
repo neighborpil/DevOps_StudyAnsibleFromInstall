@@ -79,7 +79,7 @@ nameserver 8.8.8.8
  - -k(--ask-pass): 패스워드를 물어보도록 설정
  - -K(--asnk-become-pass): 관리자로 권한 상승
  - --list-hosts: 적용되는 호스트들을 확인
-
+ - -a : shell 명령어 입력
 ```
 # ansible all -m ping -k
 
@@ -98,5 +98,16 @@ nameserver 8.8.8.8
 # ansible nginx -m ping --list-hosts # 적용되게될 호스트의 리스트를 보여줌
 # ansible all -i test -m ping --list-hosts
 
+# ansible all -m shell -a "uptime" -k # 실시간 확인
+# ansible all -m shell -a "df -h" -k # 디스크 용량 확인
+# ansible all -m shell -a "free -h" -k # 메모리 상태 확인
+# ansible all -m user -a "name=feelong password=1234" -k # 유저생성
+# ansible nginx -m copy -a "src=./feelong.file dest=/tmp/" -k # 파일복사
+# ansible nginx -m yum -a "name=httpd status=present" -k # 패키지 설치
+# ansible nginx -m copy -a "src=/etc/resolv.conf dest=/etc/resolv.conf" -k # DNS파일 복사
+# ansible nginx -m yum -a "name=httpd state=present" -k # httpd 설치
+
+# yum list installed | grep httpd # 설치된 것들중 httpd찾음
+# systemctl status httpd # 프로세스의 상태를 확인
 
 ```
