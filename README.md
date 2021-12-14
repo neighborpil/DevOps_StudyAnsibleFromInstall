@@ -111,3 +111,51 @@ nameserver 8.8.8.8
 # systemctl status httpd # 프로세스의 상태를 확인
 
 ```
+
+### Playbook
+ - 멱등성: 여러번 실행하더라도 결과는 하나만
+ - feelong.yml
+   + blockinfile: 특정 블럭을 특정 파일에 기록하겠다는 모듈
+```
+---
+- name: Ansible_vim
+  hosts: localhost
+
+  tasks:
+    - name: Add ansible hosts
+      blockinfile:
+        path: /etc/ansible/hosts
+        block: |
+          [feelong]
+          192.168.100.182
+```
+```
+# ansible-playbook feelong.yml
+```
+
+
+### Installing nginx to 3 nodes
+ - nginx.yml
+```
+---
+-
+  hosts: nginx
+  remote_user: root
+  tasks:
+    - name: install epel-release
+      yum: name=epel-release state=latest
+    - name: install nginx web server
+      yum: name=nginx state=present
+    - name: Start nginx web server
+      service: name=nginx state=started
+
+```
+
+```
+# ansible-playbook nginx.yml -k
+
+```
+ - firewall 끄기
+```
+# ansible nginx -m shell -a "systemctl stop firewalld" -k
+```
