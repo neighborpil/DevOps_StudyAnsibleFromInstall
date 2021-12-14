@@ -145,10 +145,11 @@ nameserver 8.8.8.8
     - name: install epel-release
       yum: name=epel-release state=latest
     - name: install nginx web server
-      yum: name=nginx state=present
+      yum: name=tomcat state=present
+    - name: Upload default index.html for web server
+      copy: src=index.html dest=/usr/share/nginx/html/ mode=0664
     - name: Start nginx web server
-      service: name=nginx state=started
-
+      service: name=tomcat state=started
 ```
 
 ```
