@@ -160,3 +160,11 @@ nameserver 8.8.8.8
 ```
 # ansible nginx -m shell -a "systemctl stop firewalld" -k
 ```
+
+### ping test
+
+ansible all -i swarms -m ping -k
+
+### shell 명령서 날리기
+
+ansible all -i swarms -k -m shell -a "touch /root/test"
