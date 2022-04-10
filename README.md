@@ -168,3 +168,41 @@ ansible all -i swarms -m ping -k
 ### shell 명령서 날리기
 
 ansible all -i swarms -k -m shell -a "touch /root/test"
+
+### 도커 설치 playbook
+
+ - playbook-install-docker.yml
+```
+---
+- name: installing docker
+  hosts: all
+
+  tasks:
+  - name: install yum-utils
+    yum:
+      name:
+        - yum-utils
+      state: latest
+
+  - name: add docker repo
+    shell: yum-config-manager --add-repo=https://download.docker.com/linux/centos/docker-ce.repo
+
+  - name: activate docker repo
+    shell: yum-config-manager --enable docker-ce-nightly
+
+  - name: install docker
+    yum:
+      name:
+        - docker-ce
+        - docker-ce-cli
+        - containerd.io
+      state: present
+
+  - name: start docker
+    shell: systemctl start docker
+
+```
+ - 실행방법
+```
+# ansible-playbook playbook-install-docker.yml -k
+```
