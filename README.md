@@ -201,6 +201,15 @@ ansible all -i swarms -k -m shell -a "touch /root/test"
   - name: start docker
     shell: systemctl start docker
 
+  - name: install docker-compose
+    shell: curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+
+  - name: give executable permission
+    file: dest=/usr/local/bin/docker-compose mode=a+x
+
+  - name: check docker-compose is correctly installed
+    shell: docker-compose --version
+
 ```
  - 실행방법
 ```
